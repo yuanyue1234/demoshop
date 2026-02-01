@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>娜娜鼠标指针 - 可爱愤怒两套表情包</title>
+  <title>娜娜表情包</title>
   <link rel="icon" href="nana.ico" type="image/x-icon">
   <style>
   * {
@@ -12,18 +12,19 @@
     box-sizing: border-box;
   }
 
-  /* 配色方案 - 星空粉色系 */
+  /* 配色方案 - 星空冰蓝系 */
   :root {
-    --text-color: #FFB6C1;
-    --white: #FFFFFF;
-    --btn-color: #ff69b4;
-    --card-bg: rgba(26, 26, 58, 0.7);
+    --primary-color: #00f2fe;
+    --secondary-color: #4facfe;
+    --accent-color: #495aff;
+    --text-color: #e0f7fa;
+    --card-bg: rgba(12, 20, 45, 0.7);
   }
 
   body {
     min-height: 100vh;
     background:
-      linear-gradient(to bottom, rgba(10, 10, 26, 0.85) 0%, rgba(26, 26, 58, 0.85) 50%, rgba(42, 26, 74, 0.85) 100%),
+      linear-gradient(to bottom, rgba(0, 4, 40, 0.85) 0%, rgba(0, 78, 146, 0.85) 50%, rgba(10, 26, 74, 0.85) 100%),
       url('bg.png') center center / cover no-repeat;
     color: var(--text-color);
     font-family: "Microsoft YaHei", "Heiti SC", sans-serif;
@@ -35,21 +36,21 @@
     overflow: hidden;
   }
 
-  /* 礼盒外框 */
+  /* 礼盒外框 - 冰蓝渐变 */
   .gift-box-frame {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    background: linear-gradient(135deg, #0acffe 0%, #495aff 100%);
     padding: 15px;
     box-shadow:
-      inset 0 0 50px rgba(255, 255, 255, 0.3),
-      0 0 30px rgba(255, 105, 180, 0.5);
+      inset 0 0 50px rgba(0, 242, 254, 0.3),
+      0 0 30px rgba(73, 90, 255, 0.5);
   }
 
-  /* 礼盒内衬 - 格子纹理 */
+  /* 礼盒内衬 - 网格纹理（与海报的格子纹理形成差异） */
   .gift-box-frame::before {
     content: '';
     position: absolute;
@@ -58,20 +59,9 @@
     right: 15px;
     bottom: 15px;
     background:
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 20px,
-        rgba(255, 215, 0, 0.15) 20px,
-        rgba(255, 215, 0, 0.15) 22px
-      ),
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 20px,
-        rgba(255, 215, 0, 0.15) 20px,
-        rgba(255, 215, 0, 0.15) 22px
-      );
+      linear-gradient(rgba(0, 242, 254, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 242, 254, 0.1) 1px, transparent 1px);
+    background-size: 25px 25px;
     border-radius: 12px;
     pointer-events: none;
   }
@@ -93,16 +83,27 @@
     border-radius: 50%;
     animation: twinkle var(--duration) ease-in-out infinite;
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.8),
-                0 0 12px rgba(255, 255, 255, 0.4),
-                0 0 18px rgba(255, 200, 255, 0.2);
+                0 0 12px rgba(0, 242, 254, 0.4),
+                0 0 18px rgba(79, 172, 254, 0.2);
   }
 
-  /* 流星 */
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: var(--opacity);
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+
+  /* 流星 - 冰蓝色 */
   .shooting-star {
     position: fixed;
     width: 100px;
     height: 2px;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    background: linear-gradient(to right, rgba(0, 242, 254, 0), rgba(0, 242, 254, 1));
     border-radius: 50%;
     animation: shoot 3s ease-in-out infinite;
     opacity: 0;
@@ -126,19 +127,19 @@
     }
   }
 
-  /* 月亮装饰 */
+  /* 月亮装饰 - 冰蓝月亮 */
   .moon {
     position: fixed;
     top: 50px;
     right: 50px;
     width: 100px;
     height: 100px;
-    background: linear-gradient(135deg, #fffacd 0%, #ffd700 100%);
+    background: radial-gradient(circle at 30% 30%, #e0f7fa, #4facfe);
     border-radius: 50%;
     box-shadow:
-      0 0 40px rgba(255, 215, 0, 0.6),
-      0 0 80px rgba(255, 215, 0, 0.4),
-      inset -10px -10px 20px rgba(255, 140, 0, 0.3);
+      0 0 40px rgba(0, 242, 254, 0.6),
+      0 0 80px rgba(79, 172, 254, 0.4),
+      inset -10px -10px 20px rgba(0, 78, 146, 0.3);
     z-index: 2;
   }
 
@@ -149,7 +150,7 @@
     left: 15px;
     width: 20px;
     height: 20px;
-    background: rgba(255, 140, 0, 0.3);
+    background: rgba(0, 78, 146, 0.3);
     border-radius: 50%;
   }
 
@@ -160,18 +161,18 @@
     left: 30px;
     width: 15px;
     height: 15px;
-    background: rgba(255, 140, 0, 0.2);
+    background: rgba(0, 78, 146, 0.2);
     border-radius: 50%;
   }
 
-  /* 猫咪装饰 */
+  /* 可爱猫咪装饰 */
   .cat-decoration {
     position: fixed;
     font-size: 40px;
     opacity: 0.6;
     animation: catFloat 6s ease-in-out infinite;
     z-index: 5;
-    filter: drop-shadow(0 0 10px rgba(255, 182, 193, 0.5));
+    filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.5));
   }
 
   .cat-decoration:nth-child(1) {
@@ -222,11 +223,11 @@
     border-radius: 12px;
     padding: 15px 20px;
     box-shadow:
-      0 8px 32px rgba(255, 105, 180, 0.3),
-      0 0 60px rgba(255, 182, 193, 0.2),
+      0 8px 32px rgba(79, 172, 254, 0.3),
+      0 0 60px rgba(0, 242, 254, 0.2),
       inset 0 0 50px rgba(255, 255, 255, 0.05);
     text-align: left;
-    border: 3px solid rgba(255, 182, 193, 0.4);
+    border: 3px solid rgba(79, 172, 254, 0.4);
     overflow-y: auto;
     overflow-x: hidden;
     margin: 15px;
@@ -249,9 +250,9 @@
     text-align: center;
     color: #fff;
     text-shadow:
-      0 0 10px rgba(255, 182, 193, 0.8),
-      0 0 20px rgba(255, 182, 193, 0.6),
-      0 0 30px rgba(255, 105, 180, 0.4);
+      0 0 10px rgba(0, 242, 254, 0.8),
+      0 0 20px rgba(79, 172, 254, 0.6),
+      0 0 30px rgba(73, 90, 255, 0.4);
     font-weight: 900;
     letter-spacing: 1px;
     animation: glow 3s ease-in-out infinite;
@@ -260,15 +261,15 @@
   @keyframes glow {
     0%, 100% {
       text-shadow:
-        0 0 10px rgba(255, 182, 193, 0.8),
-        0 0 20px rgba(255, 182, 193, 0.6),
-        0 0 30px rgba(255, 105, 180, 0.4);
+        0 0 10px rgba(0, 242, 254, 0.8),
+        0 0 20px rgba(79, 172, 254, 0.6),
+        0 0 30px rgba(73, 90, 255, 0.4);
     }
     50% {
       text-shadow:
-        0 0 20px rgba(255, 182, 193, 1),
-        0 0 30px rgba(255, 182, 193, 0.8),
-        0 0 40px rgba(255, 105, 180, 0.6);
+        0 0 20px rgba(0, 242, 254, 1),
+        0 0 30px rgba(79, 172, 254, 0.8),
+        0 0 40px rgba(73, 90, 255, 0.6);
     }
   }
 
@@ -276,94 +277,21 @@
     font-size: 0.9rem;
     font-weight: 900;
     margin: 0 auto 20px auto;
-    background: linear-gradient(135deg, rgba(255, 105, 180, 0.8), rgba(255, 182, 193, 0.8));
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.8), rgba(79, 172, 254, 0.8));
     display: block;
     text-align: center;
     padding: 6px 20px;
     border-radius: 50px;
-    border: 3px solid rgba(255, 182, 193, 0.5);
+    border: 3px solid rgba(79, 172, 254, 0.5);
     box-shadow:
-      0 4px 15px rgba(255, 105, 180, 0.4),
+      0 4px 15px rgba(0, 242, 254, 0.4),
       inset 0 0 20px rgba(255, 255, 255, 0.1);
     width: fit-content;
     color: #fff;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
-  /* 浮动图标样式 */
-  .floating-icon {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    animation: floatGentle 3s ease-in-out infinite;
-  }
-
-  @keyframes floatGentle {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-8px);
-    }
-  }
-
-  .floating-icon:hover {
-    transform: translateY(-12px) scale(1.1);
-  }
-
-  .floating-icon .icon-circle {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, #ff69b4, #ff1493);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.5);
-    border: 3px solid rgba(255, 255, 255, 0.5);
-    overflow: hidden;
-  }
-
-  .floating-icon .icon-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .floating-icon .icon-label {
-    margin-top: 5px;
-    font-size: 0.75rem;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 2px 8px;
-    border-radius: 10px;
-    white-space: nowrap;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  }
-
-  @media (max-width: 768px) {
-    .floating-icon {
-      bottom: 15px;
-      left: 15px;
-    }
-
-    .floating-icon .icon-circle {
-      width: 40px;
-      height: 40px;
-    }
-
-    .floating-icon .icon-label {
-      font-size: 0.65rem;
-    }
-  }
-
-  .cursor-grid {
+  .emoji-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     gap: 15px;
@@ -388,7 +316,7 @@
       margin: 0 auto 15px auto;
     }
 
-    .cursor-grid {
+    .emoji-grid {
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       margin-bottom: 15px;
@@ -405,12 +333,6 @@
       height: 75%;
     }
 
-    .label {
-      padding: 2px 5px;
-      margin-top: 2px;
-      border-radius: 6px;
-    }
-
     .btn-get {
       font-size: 0.85rem;
       padding: 8px 20px;
@@ -420,19 +342,19 @@
 
   /* 大屏幕适配 */
   @media (min-width: 1200px) {
-    .cursor-grid {
+    .emoji-grid {
       grid-template-columns: repeat(5, 1fr);
     }
   }
 
-  .cursor-item {
+  .emoji-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: transform 0.2s;
   }
 
-  .cursor-item:hover {
+  .emoji-item:hover {
     transform: scale(1.05);
   }
 
@@ -445,10 +367,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px dashed rgba(255, 182, 193, 0.6);
+    border: 2px dashed rgba(79, 172, 254, 0.6);
     margin-bottom: 5px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.2);
   }
 
   .img-placeholder img {
@@ -460,19 +382,20 @@
   .label {
     font-weight: 900;
     color: #fff;
-    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    background: linear-gradient(135deg, #4facfe, #495aff);
     padding: 4px 10px;
     border-radius: 8px;
     border: 2px solid rgba(255, 255, 255, 0.5);
     box-shadow:
-      0 4px 15px rgba(255, 105, 180, 0.4),
+      0 4px 15px rgba(0, 242, 254, 0.4),
       inset 0 0 10px rgba(255, 255, 255, 0.2);
     margin-top: 3px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 0.75rem;
   }
 
   .btn-get {
-    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    background: linear-gradient(135deg, #0acffe, #495aff);
     color: white;
     font-size: 1rem;
     padding: 10px 30px;
@@ -482,8 +405,8 @@
     font-weight: 900;
     border: 3px solid rgba(255, 255, 255, 0.5);
     box-shadow:
-      0 4px 0 #c71585,
-      0 6px 15px rgba(255, 105, 180, 0.5);
+      0 4px 0 #2563eb,
+      0 6px 15px rgba(0, 242, 254, 0.5);
     transition: all 0.1s;
     display: block;
     margin: 0 auto;
@@ -491,14 +414,14 @@
   }
 
   .btn-get:active {
-    box-shadow: 0 2px 0 #c71585;
+    box-shadow: 0 2px 0 #2563eb;
     transform: translateY(2px);
   }
 
   .btn-get:hover {
     box-shadow:
-      0 6px 0 #c71585,
-      0 12px 30px rgba(255, 105, 180, 0.7);
+      0 6px 0 #2563eb,
+      0 12px 30px rgba(0, 242, 254, 0.7);
   }
 
   /* 图片放大模态框 */
@@ -509,7 +432,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 4, 40, 0.9);
     z-index: 9999;
     justify-content: center;
     align-items: center;
@@ -536,10 +459,10 @@
     object-fit: contain;
     border-radius: 20px;
     box-shadow:
-      0 0 50px rgba(255, 182, 193, 0.8),
-      0 0 100px rgba(255, 105, 180, 0.5);
+      0 0 50px rgba(0, 242, 254, 0.8),
+      0 0 100px rgba(79, 172, 254, 0.5);
     animation: scaleIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    border: 4px solid rgba(255, 182, 193, 0.6);
+    border: 4px solid rgba(79, 172, 254, 0.6);
   }
 
   @keyframes scaleIn {
@@ -585,134 +508,101 @@
     <div class="cat-decoration">😻</div>
 
     <div class="container">
-    <h1>娜娜鼠标指针</h1>
-    <div class="subtitle">包含14种动画光标，让你的鼠标活起来！</div>
+    <h1>娜娜表情包</h1>
+    <div class="subtitle">科罗娜可爱表情！</div>
 
-    <div class="cursor-grid">
-      <div class="cursor-item">
+    <div class="emoji-grid">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/正常.gif" alt="正常">
+          <img src="./表情包/01.png" alt="表情01">
         </div>
-        <div class="label">正常</div>
+        <div class="label">生气</div>
       </div>
 
-      <div class="cursor-item">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/愤怒.gif" alt="愤怒">
+          <img src="./表情包/02.png" alt="表情02">
         </div>
-        <div class="label">愤怒</div>
+        <div class="label">开心</div>
       </div>
 
-      <div class="cursor-item">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/向上指.gif" alt="向上指">
+          <img src="./表情包/03.png" alt="表情03">
         </div>
-        <div class="label">向上指</div>
+        <div class="label">疑问</div>
       </div>
 
-      <div class="cursor-item">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/铅笔.gif" alt="铅笔">
+          <img src="./表情包/04.png" alt="表情04">
         </div>
-        <div class="label">铅笔</div>
+        <div class="label">无语</div>
       </div>
 
-      <div class="cursor-item">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/打字.gif" alt="打字">
+          <img src="./表情包/05.png" alt="表情05">
         </div>
-        <div class="label">打字</div>
+        <div class="label">哭泣</div>
       </div>
 
-      <div class="cursor-item">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/未选中.gif" alt="未选中">
+          <img src="./表情包/06.png" alt="表情06">
         </div>
-        <div class="label">未选中</div>
+        <div class="label">惊讶</div>
       </div>
 
-      <div class="cursor-item">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/愤怒_向上指.gif" alt="愤怒_向上指">
+          <img src="./表情包/07.png" alt="表情07">
         </div>
-        <div class="label">愤怒_上指</div>
+        <div class="label">调皮</div>
       </div>
 
-      <div class="cursor-item">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/愤怒_铅笔.gif" alt="愤怒_铅笔">
+          <img src="./表情包/08.png" alt="表情08">
         </div>
-        <div class="label">愤怒_铅笔</div>
+        <div class="label">爱意</div>
       </div>
 
-      <div class="cursor-item">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/愤怒_打字.gif" alt="愤怒_打字">
+          <img src="./表情包/09.png" alt="表情09">
         </div>
-        <div class="label">愤怒_打字</div>
+        <div class="label">得意</div>
       </div>
 
-      <div class="cursor-item">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/选中.gif" alt="选中">
+          <img src="./表情包/10.png" alt="表情10">
         </div>
-        <div class="label">选中</div>
+        <div class="label">思考</div>
       </div>
 
-      <div class="cursor-item">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/愤怒_选中.gif" alt="愤怒_选中">
+          <img src="./表情包/11.png" alt="表情11">
         </div>
-        <div class="label">愤怒_选中</div>
+        <div class="label">沮丧</div>
       </div>
 
-      <div class="cursor-item">
+      <div class="emoji-item">
         <div class="img-placeholder">
-          <img src="./stytic/愤怒_未选中.gif" alt="愤怒_未选中">
+          <img src="./表情包/nana.png" alt="Nana">
         </div>
-        <div class="label">愤怒_未中</div>
-      </div>
-
-      <div class="cursor-item">
-        <div class="img-placeholder">
-          <img src="./stytic/等不及了.gif" alt="等不及了">
-        </div>
-        <div class="label">等不及了</div>
-      </div>
-
-      <div class="cursor-item">
-        <div class="img-placeholder">
-          <img src="./stytic/宕机.gif" alt="宕机">
-        </div>
-        <div class="label">宕机</div>
-      </div>
-
-      <div class="cursor-item">
-        <div class="img-placeholder">
-          <img src="./stytic/下载码.png" alt="下载码">
-        </div>
-        <div class="label">扫码下载</div>
+        <div class="label">娜娜</div>
       </div>
     </div>
-    <button class="btn-get" onclick="window.open('https://yvtgt-my.sharepoint.com/personal/asunny_yvtgt_onmicrosoft_com/_layouts/52/download.aspx?share=IQDlEeYx4SeJRoVIHXq20PXuARs10It6sgRvNYok6dv8Ezo', '_blank')">点击下载全套光标！</button>
+    <button class="btn-get" onclick="window.open('https://yvtgt-my.sharepoint.com/personal/asunny_yvtgt_onmicrosoft_com/_layouts/52/download.aspx?share=IQCQZS3aKqyrSbeE0Ug7IkuCAfFWKxWU7Zs4As8CWlhaGIo', '_blank')">点击下载全套表情包！</button>
   </div>
-
-  <!-- 浮动图标 -->
-  <a href="https://v.douyin.com/CaokgfkCYnU/" target="_blank" class="floating-icon fish" title="抖音">
-    <div class="icon-circle">
-      <img src="https://asunny-1314135129.cos.ap-guangzhou.myqcloud.com/img/%E6%8A%96%E9%9F%B3_-_%E6%AC%A2%E7%AC%91%E4%B8%AD%E5%9B%BD%E5%B9%B4-iOS-512x512.png" alt="抖音">
-    </div>
-    <div class="icon-label">关注珂罗娜喵</div>
-  </a>
-
-  <!-- <a href="https://music.163.com" target="_blank" class="floating-icon music" title="网易云音乐">
-    <div class="icon-circle">🎵</div>
-    <div class="icon-label">网易云音乐</div>
-  </a> -->
 
   <!-- 图片放大模态框 -->
   <div class="image-modal" id="imageModal" onclick="closeModal()">
     <img id="modalImage" src="" alt="放大预览">
+  </div>
   </div>
 
   <script>
@@ -778,6 +668,5 @@
 <!--鼠标点击效果-->
 <script src="https://cdn.jsdelivr.net/gh/TRHX/CDN-for-itrhx.com@3.0.8/js/maodian.js"></script>
 
-  </div>
 </body>
 </html>

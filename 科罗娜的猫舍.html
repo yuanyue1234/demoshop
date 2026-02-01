@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="nana.ico" type="image/x-icon">
   <title>科罗娜的星辰猫舍</title>
   <style>
     * {
@@ -13,7 +14,9 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(to bottom, #0a0a1a 0%, #1a1a3a 50%, #2a1a4a 100%);
+      background:
+        linear-gradient(to bottom, rgba(10, 10, 26, 0.85) 0%, rgba(26, 26, 58, 0.85) 50%, rgba(42, 26, 74, 0.85) 100%),
+        url('bg.png') center center / cover no-repeat;
       overflow: hidden;
       font-family: "Microsoft YaHei", "Heiti SC", sans-serif;
       position: relative;
@@ -461,6 +464,101 @@
         opacity: 0;
       }
     }
+
+    /* 页面切换按钮容器 */
+    .page-switch-container {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 101;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .page-switch-container.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* 页面切换按钮 */
+    .page-switch-btn {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, rgba(255, 105, 180, 0.9), rgba(255, 20, 147, 0.9));
+      border: 3px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(255, 105, 180, 0.5);
+      font-size: 28px;
+      color: white;
+      position: relative;
+    }
+
+    .page-switch-btn:hover {
+      transform: scale(1.15);
+      box-shadow: 0 8px 30px rgba(255, 105, 180, 0.7);
+    }
+
+    .page-switch-btn:active {
+      transform: scale(1.05);
+    }
+
+    /* 按钮浮动提示 */
+    .page-switch-btn::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      font-weight: 600;
+    }
+
+    .page-switch-btn:hover::after {
+      opacity: 1;
+      visibility: visible;
+      bottom: -45px;
+    }
+
+    @media (max-width: 768px) {
+      .page-switch-container {
+        top: -50px;
+        gap: 15px;
+      }
+
+      .page-switch-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+      }
+
+      .page-switch-btn::after {
+        font-size: 10px;
+        padding: 3px 8px;
+        bottom: -35px;
+      }
+
+      .page-switch-btn:hover::after {
+        bottom: -38px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -511,7 +609,20 @@
 
   <!-- 内容展示区 -->
   <div class="content-area" id="contentArea">
-    <iframe src="宣传海报.html" scrolling="no"></iframe>
+    <iframe id="contentFrame" src="宣传海报.html" scrolling="no"></iframe>
+
+    <!-- 页面切换按钮容器 -->
+    <div class="page-switch-container" id="switchContainer">
+      <!-- 返回宣传海报按钮 -->
+      <div class="page-switch-btn" id="leftBtn" onclick="switchPage('宣传海报.html')" data-tooltip="返回海报">
+        🎁
+      </div>
+
+      <!-- 切换到表情包按钮 -->
+      <div class="page-switch-btn" id="rightBtn" onclick="switchPage('表情包.html')" data-tooltip="表情包">
+        😊
+      </div>
+    </div>
   </div>
 
   <script>
@@ -572,8 +683,16 @@
         setTimeout(() => {
           mainContainer.style.display = 'none';
           contentArea.classList.add('show');
+          // 显示切换按钮容器
+          document.getElementById('switchContainer').classList.add('show');
         }, 800);
       }, 1500);
+    }
+
+    // 页面切换功能
+    function switchPage(pageUrl) {
+      const iframe = document.getElementById('contentFrame');
+      iframe.src = pageUrl;
     }
 
     // 初始化
