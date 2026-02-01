@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>科罗娜的星辰猫舍</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #0a0a1a 0%, #1a1a3a 50%, #2a1a4a 100%);
+      overflow: hidden;
+      font-family: "Microsoft YaHei", "Heiti SC", sans-serif;
+      position: relative;
+    }
+
+    /* 星空背景 */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--duration) ease-in-out infinite;
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.8),
+                  0 0 12px rgba(255, 255, 255, 0.4),
+                  0 0 18px rgba(255, 200, 255, 0.2);
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: var(--opacity);
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    /* 流星 */
+    .shooting-star {
+      position: fixed;
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+      border-radius: 50%;
+      animation: shoot 3s ease-in-out infinite;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translateX(0) translateY(0) rotate(-45deg);
+        opacity: 0;
+      }
+      5% {
+        opacity: 1;
+      }
+      10% {
+        transform: translateX(-500px) translateY(500px) rotate(-45deg);
+        opacity: 0;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    /* 月亮装饰 */
+    .moon {
+      position: fixed;
+      top: 50px;
+      right: 50px;
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #fffacd 0%, #ffd700 100%);
+      border-radius: 50%;
+      box-shadow:
+        0 0 40px rgba(255, 215, 0, 0.6),
+        0 0 80px rgba(255, 215, 0, 0.4),
+        inset -10px -10px 20px rgba(255, 140, 0, 0.3);
+      z-index: 2;
+    }
+
+    .moon::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 140, 0, 0.3);
+      border-radius: 50%;
+    }
+
+    .moon::after {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 30px;
+      width: 15px;
+      height: 15px;
+      background: rgba(255, 140, 0, 0.2);
+      border-radius: 50%;
+    }
+
+    /* 主容器 */
+    .container {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 礼盒容器 */
+    .gift-box-container {
+      position: relative;
+      cursor: pointer;
+      animation: boxFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes boxFloat {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    /* 礼盒主体 */
+    .gift-box {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 10px 40px rgba(255, 105, 180, 0.5),
+        0 0 60px rgba(255, 20, 147, 0.3),
+        inset 0 0 30px rgba(255, 255, 255, 0.1);
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    /* 礼盒丝带 - 垂直 */
+    .gift-box::before {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 100%;
+      background: linear-gradient(to right, #ffd700, #ffec8b, #ffd700);
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    /* 礼盒丝带 - 水平 */
+    .gift-box::after {
+      content: '';
+      position: absolute;
+      height: 30px;
+      width: 100%;
+      background: linear-gradient(to bottom, #ffd700, #ffec8b, #ffd700);
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    /* 礼盒盖子 */
+    .gift-lid {
+      position: absolute;
+      top: -15px;
+      left: -10px;
+      width: 220px;
+      height: 50px;
+      background: linear-gradient(135deg, #ff7eb3 0%, #ff1493 100%);
+      border-radius: 15px;
+      box-shadow:
+        0 5px 20px rgba(255, 105, 180, 0.4),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      z-index: 2;
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    /* 蝴蝶结 */
+    .gift-bow {
+      position: absolute;
+      top: -45px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 60px;
+      z-index: 3;
+      filter: drop-shadow(0 5px 10px rgba(255, 105, 180, 0.5));
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    /* 打开动画 */
+    .gift-box-container.opened .gift-box {
+      animation: none;
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    .gift-box-container.opened .gift-lid {
+      animation: lidFly 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    .gift-box-container.opened .gift-bow {
+      animation: bowFly 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    @keyframes lidFly {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px) rotate(20deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes bowFly {
+      0% {
+        transform: translateX(-50%) translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(-50%) translateY(-250px) rotate(30deg);
+        opacity: 0;
+      }
+    }
+
+    /* 星星爆炸效果 */
+    .sparkle {
+      position: absolute;
+      font-size: 30px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .gift-box-container.opened .sparkle {
+      animation: sparkleBurst 1.5s ease-out forwards;
+    }
+
+    @keyframes sparkleBurst {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* 标题 */
+    .title {
+      font-size: 4rem;
+      font-weight: 900;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 60px;
+      text-shadow:
+        0 0 10px rgba(255, 182, 193, 0.8),
+        0 0 20px rgba(255, 182, 193, 0.6),
+        0 0 30px rgba(255, 182, 193, 0.4),
+        0 0 40px rgba(255, 105, 180, 0.3),
+        2px 2px 4px rgba(0, 0, 0, 0.5);
+      animation: glow 3s ease-in-out infinite;
+      letter-spacing: 8px;
+      opacity: 0;
+      animation: titleFadeIn 1.5s ease-out forwards, glow 3s ease-in-out 1.5s infinite;
+    }
+
+    @keyframes titleFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        text-shadow:
+          0 0 10px rgba(255, 182, 193, 0.8),
+          0 0 20px rgba(255, 182, 193, 0.6),
+          0 0 30px rgba(255, 182, 193, 0.4),
+          0 0 40px rgba(255, 105, 180, 0.3),
+          2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      50% {
+        text-shadow:
+          0 0 20px rgba(255, 182, 193, 1),
+          0 0 30px rgba(255, 182, 193, 0.8),
+          0 0 40px rgba(255, 182, 193, 0.6),
+          0 0 50px rgba(255, 105, 180, 0.4),
+          2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    /* 提示文字 */
+    .hint {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 40px;
+      animation: hintPulse 2s ease-in-out infinite;
+      opacity: 0;
+      animation: hintFadeIn 1s ease-out 0.5s forwards, hintPulse 2s ease-in-out 1.5s infinite;
+    }
+
+    @keyframes hintFadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes hintPulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 1;
+      }
+    }
+
+    /* 内容展示区 - 礼盒内部 */
+    .content-area {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 85vmin;
+      height: 85vmin;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.8s ease;
+      z-index: 100;
+    }
+
+    .content-area.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .content-area iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    /* 可爱猫咪装饰 */
+    .cat-decoration {
+      position: fixed;
+      font-size: 40px;
+      opacity: 0.6;
+      animation: catFloat 6s ease-in-out infinite;
+      z-index: 5;
+      filter: drop-shadow(0 0 10px rgba(255, 182, 193, 0.5));
+    }
+
+    .cat-decoration:nth-child(1) {
+      top: 10%;
+      left: 5%;
+      animation-delay: 0s;
+    }
+
+    .cat-decoration:nth-child(2) {
+      top: 20%;
+      right: 8%;
+      animation-delay: 1s;
+    }
+
+    .cat-decoration:nth-child(3) {
+      bottom: 15%;
+      left: 10%;
+      animation-delay: 2s;
+    }
+
+    .cat-decoration:nth-child(4) {
+      bottom: 25%;
+      right: 5%;
+      animation-delay: 3s;
+    }
+
+    @keyframes catFloat {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-15px) rotate(5deg);
+      }
+      75% {
+        transform: translateY(10px) rotate(-5deg);
+      }
+    }
+
+    /* 光环效果 */
+    .glow-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 250px;
+      height: 250px;
+      border: 3px solid rgba(255, 105, 180, 0.3);
+      border-radius: 50%;
+      animation: ringPulse 2s ease-out infinite;
+      pointer-events: none;
+    }
+
+    .glow-ring:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+
+    .glow-ring:nth-child(3) {
+      animation-delay: 1s;
+    }
+
+    @keyframes ringPulse {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 星空背景 -->
+  <div class="stars" id="stars"></div>
+
+  <!-- 流星 -->
+  <div class="shooting-star" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
+  <div class="shooting-star" style="top: 30%; left: 50%; animation-delay: 2s;"></div>
+  <div class="shooting-star" style="top: 50%; left: 80%; animation-delay: 4s;"></div>
+
+  <!-- 月亮 -->
+  <div class="moon"></div>
+
+  <!-- 猫咪装饰 -->
+  <div class="cat-decoration">😺</div>
+  <div class="cat-decoration">😸</div>
+  <div class="cat-decoration">🐱</div>
+  <div class="cat-decoration">😻</div>
+
+  <!-- 主容器 -->
+  <div class="container" id="mainContainer">
+    <h1 class="title">科罗娜的星辰猫舍</h1>
+
+    <div class="gift-box-container" id="giftBox" onclick="openGift()">
+      <div class="glow-ring"></div>
+      <div class="glow-ring"></div>
+      <div class="glow-ring"></div>
+      <div class="gift-bow">🎀</div>
+      <div class="gift-lid"></div>
+      <div class="gift-box">
+        <span style="font-size: 80px;">🎁</span>
+      </div>
+      <!-- 星星爆炸效果 -->
+      <div class="sparkle" style="--tx: -100px; --ty: -100px;">⭐</div>
+      <div class="sparkle" style="--tx: 100px; --ty: -100px;">✨</div>
+      <div class="sparkle" style="--tx: -100px; --ty: 100px;">🌟</div>
+      <div class="sparkle" style="--tx: 100px; --ty: 100px;">💫</div>
+      <div class="sparkle" style="--tx: 0px; --ty: -120px;">⭐</div>
+      <div class="sparkle" style="--tx: -120px; --ty: 0px;">✨</div>
+      <div class="sparkle" style="--tx: 120px; --ty: 0px;">🌟</div>
+      <div class="sparkle" style="--tx: 0px; --ty: 120px;">💫</div>
+    </div>
+
+    <p class="hint">点击礼物打开惊喜 ✨</p>
+  </div>
+
+  <!-- 内容展示区 -->
+  <div class="content-area" id="contentArea">
+    <iframe src="宣传海报.html" scrolling="no"></iframe>
+  </div>
+
+  <script>
+    // 生成星空
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const numStars = 200;
+
+      for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+
+        // 随机位置
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+
+        // 随机大小
+        const size = Math.random() * 3 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+
+        // 随机动画时长
+        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+
+        // 随机透明度
+        star.style.setProperty('--opacity', Math.random() * 0.5 + 0.3);
+
+        // 随机延迟
+        star.style.animationDelay = Math.random() * 5 + 's';
+
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // 打开礼物
+    let isOpened = false;
+    function openGift() {
+      if (isOpened) return;
+      isOpened = true;
+
+      const giftBox = document.getElementById('giftBox');
+      const mainContainer = document.getElementById('mainContainer');
+      const contentArea = document.getElementById('contentArea');
+
+      // 添加打开动画
+      giftBox.classList.add('opened');
+
+      // 播放音效（可选）
+      // const audio = new Audio('open.mp3');
+      // audio.play();
+
+      // 延迟显示内容
+      setTimeout(() => {
+        mainContainer.style.opacity = '0';
+        mainContainer.style.transform = 'scale(0.8)';
+        mainContainer.style.transition = 'all 0.8s ease';
+
+        setTimeout(() => {
+          mainContainer.style.display = 'none';
+          contentArea.classList.add('show');
+        }, 800);
+      }, 1500);
+    }
+
+    // 初始化
+    createStars();
+  </script>
+
+</body>
+</html>
